@@ -1,0 +1,298 @@
+  <!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <title>KU 22-1 데이터인문학 지도</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+        <style>
+            html, body, #mapid{
+                height: 100%;
+                margin: 0;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id = 'mapid'>
+        </div>
+        <script>
+            var map = L.map('mapid').setView([37.5378, 127.0253], 11);
+            var osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+                attribution:'&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> Contributors'
+            }).addTo(map);
+            var GoogleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+                maxZoom: 20,
+                subdomains:['mt0','mt1','mt2','mt3']
+            })
+            var GoogleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+                maxZoom: 20,
+                subdomains:['mt0','mt1','mt2','mt3']
+            })
+            var GoogleTerrain = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',{
+                maxZoom: 20,
+                subdomains:['mt0','mt1','mt2','mt3']
+            })
+            var GoogleHybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
+                maxZoom: 20,
+                subdomains:['mt0','mt1','mt2','mt3']
+            })
+            var Stamen_Watercolor = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
+                attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                subdomains: 'abcd',
+                minZoom: 1,
+                maxZoom: 16,
+                ext: 'jpg'
+            });
+
+            var baseMaps = {
+                "GoogleStreetMap": GoogleStreets,
+                "GoogleSatelliteMap":GoogleSat,
+                "GoogleTerrain":GoogleTerrain,
+                "GoogleHybrid":GoogleHybrid,
+                "Watercolor":Stamen_Watercolor,
+                "OpenStreetMap":osm
+            };
+            
+            L.control.layers(baseMaps).addTo(map);
+  
+            var myIcon = L.Icon.extend({
+                options: {
+                shadowUrl: 'image/myicon_shadow.png',
+                iconSize:     [46, 62],
+                shadowSize:   [44, 22],
+                iconAnchor:   [23, 62],
+                shadowAnchor: [4, 22],
+                popupAnchor:  [0, -62]
+                }
+            });
+
+            var castleIcon = new myIcon({iconUrl: 'image/myicon_castle.png'}),
+                mountainIcon = new myIcon({iconUrl: 'image/myicon_mountain.png'}),
+                mountainroadIcon = new myIcon({iconUrl: 'image/myicon_mountainroad.png'}),
+                horseIcon = new myIcon({iconUrl: 'image/myicon_horse.png'});
+                buildingIcon = new myIcon({iconUrl: 'image/myicon_building.png'});
+                villageIcon = new myIcon({iconUrl: 'image/myicon_village.png'});
+
+                L.icon = function (options) {
+                    return new L.Icon(options);
+                };
+      
+            var part_1 = L.layerGroup();
+            var part_2 = L.layerGroup();
+            var part_3 = L.layerGroup();  
+            var part_4 = L.layerGroup();  
+            var part_5 = L.layerGroup();  
+            var part_6 = L.layerGroup();  
+            var part_7 = L.layerGroup();
+            var part_8 = L.layerGroup();    
+
+            map.addLayer(part_1)
+            map.addLayer(part_2)
+            map.addLayer(part_3)
+            map.addLayer(part_4)
+            map.addLayer(part_5)
+            map.addLayer(part_6)
+            map.addLayer(part_7)
+            map.addLayer(part_8)
+
+            var overlays = {
+                "민주화운동": part_1,
+                "전쟁": part_2,
+                "독립운동": part_3,
+                "사회적참사": part_4,
+                "테러": part_5,
+                "국가폭력": part_6,
+                "병사": part_7,
+                "산업재해": part_8
+            };
+
+            var ctr_mapLayers = L.control.layers(null, overlays, {collapsed:false, position:'bottomleft'}).addTo(map);
+        
+            var geodata =[
+
+            {"type": "Feature", "properties": {"name": "박종철열사 추모비", "class": "추모비", "category": "민주화운동", "form": "point", "address": "서울특별시 관악구 신림동 산56-1 서울대학교", "refurl": "http://870114cheol-a.org/about-pjc/"}, "geometry": {"type": "Point", "coordinates": [126.9482209, 37.4663753]}},
+{"type": "Feature", "properties": {"name": "김세진,이재호 추모비", "class": "추모비", "category": "민주화운동", "form": "point", "address": "서울특별시 관악구 신림동 산56-1 서울대학교", "refurl": "https://snumemory.org"}, "geometry": {"type": "Point", "coordinates": [126.9482209, 37.4663753]}},
+{"type": "Feature", "properties": {"name": "재일학도의용군전몰용사위령비", "class": "추모비", "category": "전쟁", "form": "point", "address": "서울 동작구 동작동 224-3", "refurl": "https://www.mpva.go.kr/mpva/selectBbsNttView.do?key=1067&bbsNo=211&nttNo=53204&searchCtgry=&searchCnd=all&searchKrwd=&pageIndex=1&integrDeptCode="}, "geometry": {"type": "Point", "coordinates": [126.97277, 37.50064]}},
+{"type": "Feature", "properties": {"name": "호국충혼위령비", "class": "추모비", "category": "전쟁", "form": "point", "address": "서울 강서구 개화동 산81-13", "refurl": "https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=cc30c752-6497-4b54-b49e-cf9746048135"}, "geometry": {"type": "Point", "coordinates": [126.8051783, 37.5826798]}},
+{"type": "Feature", "properties": {"name": "대한독립군 무명용사 위령탑", "class": "추모비", "category": "독립운동", "form": "point", "address": "서울특별시 동작구 동작동 271-18", "refurl": "https://www.joongang.co.kr/article/4277946#home"}, "geometry": {"type": "Point", "coordinates": [126.97277, 37.50064]}},
+{"type": "Feature", "properties": {"name": "유관순 열사 추모비", "class": "추모비", "category": "독립운동", "form": "point", "address": "서울 용산구 녹사평대로40다길 33", "refurl": "http://www.sijung.co.kr/news/articleView.html?idxno=105072"}, "geometry": {"type": "Point", "coordinates": [126.9913196, 37.5299145]}},
+{"type": "Feature", "properties": {"name": "최규식 경무관, 정종수 경사 추모비", "class": "추모비", "category": "테러", "form": "point", "address": "서울 종로구 청운동 산 1-1", "refurl": "https://www.mpva.go.kr/english/selectBbsNttView.do?key=992&bbsNo=212&nttNo=55238&searchCtgry=&searchCnd=all&searchKrwd=&pageIndex=1&integrDeptCode="}, "geometry": {"type": "Point", "coordinates": [126.97008, 37.58839]}},
+{"type": "Feature", "properties": {"name": "화성 씨랜드 화재 희생 어린이 추모비", "class": "추모비", "category": "사회적참사", "form": "point", "address": "서울특별시 송파구 마천동 산2", "refurl": "https://www.yna.co.kr/view/AKR20190625135900061"}, "geometry": {"type": "Point", "coordinates": [127.15917, 37.50046]}},
+{"type": "Feature", "properties": {"name": "우면산 산사태 추모공원", "class": "공원", "category": "사회적참사", "form": "point", "address": "서울 서초구 양재동 236", "refurl": "http://segyelocalnews.com/news/newsview.php?ncode=1065625174645929"}, "geometry": {"type": "Point", "coordinates": [127.0374945, 37.4734606]}},
+{"type": "Feature", "properties": {"name": "세월호 기억공간-광화문 광장", "class": "임시", "category": "사회적참사", "form": "point", "address": "서울시 종로구 세종대로", "refurl": "https://opengov.seoul.go.kr/mediahub/17629085"}, "geometry": {"type": "Point", "coordinates": [126.9769142, 37.5716332]}},
+{"type": "Feature", "properties": {"name": "와우아파트 붕괴 사고 동판", "class": "동판", "category": "사회적참사", "form": "point", "address": "서울 마포구 창전동 3-245", "refurl": "https://news.v.daum.net/v/20190426062010743?s=print_news"}, "geometry": {"type": "Point", "coordinates": [126.92939, 37.55007]}},
+{"type": "Feature", "properties": {"name": "성수대교사고희생자위령비", "class": "추모비", "category": "사회적참사", "form": "point", "address": "서울 성동구 성수동1가 694-82", "refurl": "http://archive.much.go.kr/data/01/folderView.do?jobdirSeq=246"}, "geometry": {"type": "Point", "coordinates": [127.0343649, 37.5321069]}},
+{"type": "Feature", "properties": {"name": "순직 소방관 추모 동판", "class": "동판", "category": "사회적참사", "form": "point", "address": "서울특별시 은평구 진관동 120", "refurl": "https://www.nfa.go.kr/cherish/news/pressrelease/?boardId=bbs_0000000000000048&mode=view&cntId=26&category=&pageIdx="}, "geometry": {"type": "Point", "coordinates": [126.9197251, 37.6284479]}},
+{"type": "Feature", "properties": {"name": "삼풍 참사 위령탑", "class": "추모비", "category": "사회적참사", "form": "point", "address": "서울 서초구 양재동 236", "refurl": "http://www.ohmynews.com/NWS_Web/View/img_pg.aspx?CNTN_CD=IE002232135"}, "geometry": {"type": "Point", "coordinates": [127.0374945, 37.4734606]}},
+{"type": "Feature", "properties": {"name": "한강 인도교 희생자 위령비", "class": "추모비", "category": "사회적참사", "form": "point", "address": "서울 용산구 양녕로 445", "refurl": "https://www.sisain.co.kr/news/articleView.html?idxno=42520"}, "geometry": {"type": "Point", "coordinates": [126.9585, 37.5169]}},
+{"type": "Feature", "properties": {"name": "용산 참사 추모 현수막", "class": "임시", "category": "사회적참사", "form": "point", "address": "서울 용산구 한강로2가 224-1번지", "refurl": "https://www.hankookilbo.com/News/Read/A2021042718030003719"}, "geometry": {"type": "Point", "coordinates": [126.96668, 37.52759]}},
+{"type": "Feature", "properties": {"name": "김관홍 잠수사 추모비", "class": "추모비", "category": "사회적참사", "form": "point", "address": "서울 은평구", "refurl": "https://m.khan.co.kr/national/national-general/article/202009241041001#c2b"}, "geometry": {"type": "Point", "coordinates": [126.9291822, 37.6027849]}},
+{"type": "Feature", "properties": {"name": "세월호 기억공간-서울시의회", "class": "임시", "category": "사회적참사", "form": "point", "address": "서울시 중구 서소문동 서울시의회 앞", "refurl": "https://www.hani.co.kr/arti/society/society_general/1018139.html"}, "geometry": {"type": "Point", "coordinates": [126.9745741, 37.5639927]}},
+{"type": "Feature", "properties": {"name": "우면산 산사태 기록 간판 시설", "class": "간판", "category": "사회적참사", "form": "point", "address": "우면산 인근", "refurl": "https://www.yna.co.kr/view/AKR20170626143900004"}, "geometry": {"type": "Point", "coordinates": [127.0100473, 37.4736686]}},
+{"type": "Feature", "properties": {"name": "백남기 열사 추모비", "class": "추모비", "category": "국가폭력", "form": "point", "address": "서울특별시 동작구 흑석동 221", "refurl": "http://www.mediapia.co.kr/news/articleView.html?idxno=49506&replyAll=&reply_sc_order_by=C#0BrP"}, "geometry": {"type": "Point", "coordinates": [126.95815, 37.50506]}},
+{"type": "Feature", "properties": {"name": "고 박태준 포스코 명예회장 추모비", "class": "추모비", "category": "병사", "form": "point", "address": "서울 동작구 동작동 ", "refurl": "https://www.idaegu.co.kr/news/articleView.html?idxno=73725"}, "geometry": {"type": "Point", "coordinates": [126.97277, 37.50064]}},
+{"type": "Feature", "properties": {"name": "조정식 열사 추모비", "class": "추모비", "category": "산업재해", "form": "point", "address": "서울특별시 관악구 신림동 산56-1 서울대학교", "refurl": "https://www.sarangbang.or.kr/hrdailynews/56018"}, "geometry": {"type": "Point", "coordinates": [126.9482209, 37.4663753]}},
+{"type": "Feature", "properties": {"name": "구의역 김군 추모 조형물", "class": "조형물", "category": "산업재해", "form": "point", "address": "서울 광진구 자양동 245-24", "refurl": "http://www.ohmynews.com/NWS_Web/View/at_pg.aspx?CNTN_CD=A0002745836"}, "geometry": {"type": "Point", "coordinates": [127.085092, 37.5370084]}},
+{"type": "Feature", "properties": {"name": "고 서지윤 간호사 추모 조형물", "class": "조형물", "category": "산업재해", "form": "point", "address": "서울 중랑구 신내동 서울의료원 ", "refurl": "https://www.hani.co.kr/arti/society/society_general/994602.html"}, "geometry": {"type": "Point", "coordinates": [127.06548, 37.51249]}},
+{"type": "Feature", "properties": {"name": "주한미군 순직장병 추모비", "class": "추모비", "category": "전쟁", "form": "point", "address": "서울 용산구 용산동4가 13", "refurl": "https://www.yna.co.kr/view/AKR20220502050000504"}, "geometry": {"type": "Point", "coordinates": [126.9905974, 37.5215568]}},
+{"type": "Feature", "properties": {"name": "파월전몰영령 추모비", "class": "추모비", "category": "전쟁", "form": "point", "address": "서울 동작구 동작동 271-18", "refurl": "http://medcmd.mil.kr/user/boardList.action?boardId=O_46288&siteId=snmb&page=1&search=&column=&boardType=02&listType=&id=snmb_020204000000&parent=&boardSeq=O_276251&command=albumView&chkBoxSeq=&chkBoxId=&chkBoxPos=&chkBoxDepth=&chkBoxFamSeq=&warningYn=N&categoryId=&categoryDepth="}, "geometry": {"type": "Point", "coordinates": [126.97277, 37.50064]}},
+{"type": "Feature", "properties": {"name": "유격부대전적위령비", "class": "추모비", "category": "전쟁", "form": "point", "address": "서울 동작구 동작동 산22-11", "refurl": "https://blog.naver.com/snmblove/222563902028"}, "geometry": {"type": "Point", "coordinates": [126.97277, 37.50064]}},
+{"type": "Feature", "properties": {"name": "KAL기 버마상공 피폭 희생자 위령탑", "class": "추모비", "category": "테러", "form": "point", "address": "서울 서초구 양재동 236", "refurl": "https://www.doopedia.co.kr/photobox/comm/community.do?_method=view&GAL_IDX=101012000712393"}, "geometry": {"type": "Point", "coordinates": [127.0374945, 37.4734606]}},
+{"type": "Feature", "properties": {"name": "유격 백마부대 충혼탑", "class": "추모비", "category": "전쟁", "form": "point", "address": "서울특별시 동작구 동작동 271-18", "refurl": "https://news.seoul.go.kr/culture/archives/76353"}, "geometry": {"type": "Point", "coordinates": [126.97277, 37.50064]}},
+{"type": "Feature", "properties": {"name": "학도 의용군 현충비", "class": "추모비", "category": "전쟁", "form": "point", "address": "서울 동작구 흑석동 172-12", "refurl": "https://www.much.go.kr/L/v1bAJL61RR.do"}, "geometry": {"type": "Point", "coordinates": [126.973, 37.5007]}},
+{"type": "Feature", "properties": {"name": "국립 4.19 민주 묘지", "class": "묘지", "category": "민주화운동", "form": "point", "address": "서울 강북구 수유동 580-1", "refurl": "https://www.mpva.go.kr/419/index.do"}, "geometry": {"type": "Point", "coordinates": [126.92939, 37.55007]}},
+{"type": "Feature", "properties": {"name": "매헌 윤봉길 의사 기념관", "class": "기념관", "category": "독립운동", "form": "point", "address": "서울 서초구 양재동 236", "refurl": "https://www.seocho.go.kr/site/seocho/04/10404020100002015070703.jsp"}, "geometry": {"type": "Point", "coordinates": [127.0374945, 37.4734606]}},
+{"type": "Feature", "properties": {"name": "6.25참전유공자 기념비", "class": "추모비", "category": "전쟁", "form": "point", "address": "서울 강남구 개포로 410", "refurl": "https://www.gangnam.go.kr/gangnamlife/view.html?code=11_3&bdm_bbs_key=201"}, "geometry": {"type": "Point", "coordinates": [127.0879504, 37.4963796]}},
+{"type": "Feature", "properties": {"name": "죽음을 강요당한 발달장애인과 그 가족에 대한 추모제", "class": "임시", "category": "사회적참사", "form": "point", "address": "지하철 4호선 삼각지역 상행선 방향 승강장", "refurl": "https://www.hankookilbo.com/News/Read/A2022052616050005537"}, "geometry": {"type": "Point", "coordinates": [126.9741107, 37.5355067]}},
+
+{"type": "Feature", "properties": {"name": "포병장교 충혼비 ", "class": "추모비", "category": "전쟁", "form": "point", "address": "서울특별시 동작구 동작동 133", "refurl": "https://www.snmb.mil.kr/snmb/234/subview.do?enc=Zm5jdDF8QEB8JTJGYmJzJTJGc25tYiUyRjc3JTJGNjA4MyUyRmFydGNsVmlldy5kbyUzRnBhc3N3b3JkJTNEJTI2cmdzQmduZGVTdHIlM0QlMjZiYnNDbFNlcSUzRCUyNnJnc0VuZGRlU3RyJTNEJTI2aXNWaWV3TWluZSUzRGZhbHNlJTI2cGFnZSUzRDIlMjZiYnNPcGVuV3JkU2VxJTNEJTI2c3JjaENvbHVtbiUzRCUyNnNyY2hXcmQlM0QlMjY%3D"}, "geometry": {"type": "Point", "coordinates": [126.97671, 37.50077]}},
+{"type": "Feature", "properties": {"name": "육사 7기 특별 동기생 추모탑", "class": "추모비", "category": "전쟁", "form": "point", "address": "서울특별시 동작구 동작동 225-4", "refurl": "https://www.snmb.mil.kr/snmb/234/subview.do?enc=Zm5jdDF8QEB8JTJGYmJzJTJGc25tYiUyRjc3JTJGNjA4NSUyRmFydGNsVmlldy5kbyUzRnBhc3N3b3JkJTNEJTI2cmdzQmduZGVTdHIlM0QlMjZiYnNDbFNlcSUzRCUyNnJnc0VuZGRlU3RyJTNEJTI2aXNWaWV3TWluZSUzRGZhbHNlJTI2cGFnZSUzRDElMjZiYnNPcGVuV3JkU2VxJTNEJTI2c3JjaENvbHVtbiUzRCUyNnNyY2hXcmQlM0QlMjY%3D"}, "geometry": {"type": "Point", "coordinates": [126.97335, 37.50031]}},
+{"type": "Feature", "properties": {"name": "학도의용군 무명용사탑", "class": "추모비", "category": "전쟁", "form": "point", "address": "서울특별시 동작구 동작동 225-4", "refurl": "https://www.snmb.mil.kr/snmb/234/subview.do?enc=Zm5jdDF8QEB8JTJGYmJzJTJGc25tYiUyRjc3JTJGNjA4MiUyRmFydGNsVmlldy5kbyUzRnBhc3N3b3JkJTNEJTI2cmdzQmduZGVTdHIlM0QlMjZiYnNDbFNlcSUzRCUyNnJnc0VuZGRlU3RyJTNEJTI2aXNWaWV3TWluZSUzRGZhbHNlJTI2cGFnZSUzRDIlMjZiYnNPcGVuV3JkU2VxJTNEJTI2c3JjaENvbHVtbiUzRCUyNnNyY2hXcmQlM0QlMjY%3D"}, "geometry": {"type": "Point", "coordinates": [126.97397, 37.50064]}},
+{"type": "Feature", "properties": {"name": "국립서울현충원현충탑", "class": "추모비", "category": "전쟁", "form": "point", "address": "서울특별시 동작구 동작동 224-11", "refurl": "https://www.snmb.mil.kr/snmb/234/subview.do?enc=Zm5jdDF8QEB8JTJGYmJzJTJGc25tYiUyRjc3JTJGYXJ0Y2xMaXN0LmRvJTNGcmdzQmduZGVTdHIlM0QlMjZiYnNDbFNlcSUzRCUyNnJnc0VuZGRlU3RyJTNEJTI2aXNWaWV3TWluZSUzRGZhbHNlJTI2cGFnZSUzRDElMjZiYnNPcGVuV3JkU2VxJTNEJTI2c3JjaENvbHVtbiUzRCUyNnNyY2hXcmQlM0QlMjY%3D"}, "geometry": {"type": "Point", "coordinates": [126.97278, 37.50066]}},
+{"type": "Feature", "properties": {"name": "국립서울현충원충열대", "class": "추모비", "category": "전쟁", "form": "point", "address": "서울특별시 동작구 동작동 222-17", "refurl": "https://www.snmb.mil.kr/snmb/234/subview.do?enc=Zm5jdDF8QEB8JTJGYmJzJTJGc25tYiUyRjc3JTJGNjA5MiUyRmFydGNsVmlldy5kbyUzRnBhc3N3b3JkJTNEJTI2cmdzQmduZGVTdHIlM0QlMjZiYnNDbFNlcSUzRCUyNnJnc0VuZGRlU3RyJTNEJTI2aXNWaWV3TWluZSUzRGZhbHNlJTI2cGFnZSUzRDElMjZiYnNPcGVuV3JkU2VxJTNEJTI2c3JjaENvbHVtbiUzRCUyNnNyY2hXcmQlM0QlMjY%3D"}, "geometry": {"type": "Point", "coordinates": [126.96972, 37.50061]}},
+{"type": "Feature", "properties": {"name": "경찰충혼탑", "class": "추모비", "category": "전쟁", "form": "point", "address": "서울 동작구 동작동 220-1", "refurl": "https://www.snmb.mil.kr/snmb/234/subview.do?enc=Zm5jdDF8QEB8JTJGYmJzJTJGc25tYiUyRjc3JTJGNjA5MCUyRmFydGNsVmlldy5kbyUzRnBhc3N3b3JkJTNEJTI2cmdzQmduZGVTdHIlM0QlMjZiYnNDbFNlcSUzRCUyNnJnc0VuZGRlU3RyJTNEJTI2aXNWaWV3TWluZSUzRGZhbHNlJTI2cGFnZSUzRDElMjZiYnNPcGVuV3JkU2VxJTNEJTI2c3JjaENvbHVtbiUzRCUyNnNyY2hXcmQlM0QlMjY%3D"}, "geometry": {"type": "Point", "coordinates": [126.96827, 37.50201]}},
+{"type": "Feature", "properties": {"name": "육탄10용사 현충비", "class": "추모비", "category": "전쟁", "form": "point", "address": "서울 동작구 동작동 209-7", "refurl": "https://www.snmb.mil.kr/snmb/234/subview.do?enc=Zm5jdDF8QEB8JTJGYmJzJTJGc25tYiUyRjc3JTJGNjA4OCUyRmFydGNsVmlldy5kbyUzRnBhc3N3b3JkJTNEJTI2cmdzQmduZGVTdHIlM0QlMjZiYnNDbFNlcSUzRCUyNnJnc0VuZGRlU3RyJTNEJTI2aXNWaWV3TWluZSUzRGZhbHNlJTI2cGFnZSUzRDElMjZiYnNPcGVuV3JkU2VxJTNEJTI2c3JjaENvbHVtbiUzRCUyNnNyY2hXcmQlM0QlMjY%3D"}, "geometry": {"type": "Point", "coordinates": [126.97302, 37.50146]}},
+{"type": "Feature", "properties": {"name": "50년현지임관 전사자추념비", "class": "추모비", "category": "전쟁", "form": "point", "address": "서울 동작구 동작동 271-18", "refurl": "https://www.snmb.mil.kr/snmb/234/subview.do?enc=Zm5jdDF8QEB8JTJGYmJzJTJGc25tYiUyRjc3JTJGNjA4NiUyRmFydGNsVmlldy5kbyUzRnBhc3N3b3JkJTNEJTI2cmdzQmduZGVTdHIlM0QlMjZiYnNDbFNlcSUzRCUyNnJnc0VuZGRlU3RyJTNEJTI2aXNWaWV3TWluZSUzRGZhbHNlJTI2cGFnZSUzRDElMjZiYnNPcGVuV3JkU2VxJTNEJTI2c3JjaENvbHVtbiUzRCUyNnNyY2hXcmQlM0QlMjY%3D"}, "geometry": {"type": "Point", "coordinates": [126.974, 37.50011]}},
+{"type": "Feature", "properties": {"name": "4월학생혁명기념탑", "class": "추모비", "category": "민주화운동", "form": "point", "address": "서울 강북구 수유동 580-1", "refurl": "https://www.mpva.go.kr/419/contents.do?key=316"}, "geometry": {"type": "Point", "coordinates": [127.00683, 37.64853]}},
+{"type": "Feature", "properties": {"name": "국립서울현충원", "class": "묘역", "category": "전쟁", "form": "point", "address": "서울특별시 동작구 동작동 271-18", "refurl": "https://www.snmb.mil.kr/snmb/215/subview.do"}, "geometry": {"type": "Point", "coordinates": [126.9728, 37.5006]}},
+
+
+
+
+];  
+
+            L.geoJson(geodata, {
+                onEachFeature: function (feature, layer) {
+                            layer.bindPopup('<a href="' + feature.properties.refurl + '" target="_blank"><center><big><b>' + "[" + feature.properties.class + "]" +" " + feature.properties.name + '</b></big></a><br/>' + feature.properties.address)},
+
+                pointToLayer: function(feature, latlng) { 
+                    switch (feature.properties.category) {
+                                case '민주화운동': return L.marker(latlng, {icon: castleIcon}).addTo(part_1);
+                                case '전쟁': return L.marker(latlng, {icon: castleIcon}).addTo(part_2);
+                                case '독립운동': return L.marker(latlng, {icon: castleIcon}).addTo(part_3);
+                                case '사회적참사': return L.marker(latlng, {icon: castleIcon}).addTo(part_4);
+                                case '테러': return L.marker(latlng, {icon: castleIcon}).addTo(part_5);
+                                case '국가폭력': return L.marker(latlng, {icon: castleIcon}).addTo(part_6);
+                                case '병사': return L.marker(latlng, {icon: castleIcon}).addTo(part_7);
+                                case '산업재해': return L.marker(latlng, {icon: castleIcon}).addTo(part_8);
+                        }
+                    }
+                });
+    
+                
+                
+                var linelatlngs1 = [[37.4663753, 126.9482209], [37.5403153, 126.9731225]];
+                var linelatlngs2 = [[37.4663753, 126.9482209], [37.4867, 126.927]];
+                var linelatlngs3 = [[37.50064, 126.97277], [37.4509, 126.6476]];
+                var linelatlngs4 = [[37.50064, 126.97277], [39.1723908, 127.4285128]];
+                var linelatlngs5 = [[37.50064, 126.97277], [40.2416721, 128.3095764]];
+                var linelatlngs6 = [[37.50064, 126.97277], [38.146851, 127.3135158]];
+                var linelatlngs7 = [[37.5826798, 126.8051783], [37.5826798, 126.8051783]];
+                var linelatlngs8 = [[37.50064, 126.97277], [37.5099591, 129.1188736]];
+                var linelatlngs9 = [[37.5299145, 126.9913196], [37.5736, 126.95572]];
+                var linelatlngs10 = [[37.50064, 126.97277], [36.3082, 128.4065]];
+                var linelatlngs11 = [[37.58839, 126.97008], [37.58451, 126.97518]];
+                var linelatlngs12 = [[37.50046, 127.15917], [37.1339, 126.682]];
+                var linelatlngs13 = [[37.4734606, 127.0374945], [37.4736686, 127.0100473]];
+                var linelatlngs14 = [[37.5716332, 126.9769142], [34.2083, 125.9699]];
+                var linelatlngs15 = [[37.55007, 126.92939], [37.55007, 126.92939]];
+                var linelatlngs16 = [[37.5321069, 127.0343649], [37.5393717, 127.0353398]];
+                var linelatlngs17 = [[37.6284479, 126.9197251], [37.5871, 126.94676]];
+                var linelatlngs18 = [[37.4734606, 127.0374945], [37.49815, 127.01325]];
+                var linelatlngs19 = [[37.5169, 126.9585], [37.5162979, 126.9624844]];
+                var linelatlngs20 = [[37.52759, 126.96668], [37.52608, 126.9672]];
+                var linelatlngs21 = [[37.6027849, 126.9291822], [34.2083, 125.9699]];
+                var linelatlngs22 = [[37.5639927, 126.9745741], [34.2083, 125.9699]];
+                var linelatlngs23 = [[37.4736686, 127.0100473], [37.4736686, 127.0100473]];
+                var linelatlngs24 = [[37.50506, 126.95815], [37.5800582, 126.9978462]];
+                var linelatlngs25 = [[37.50064, 126.97277], [37.56214, 126.94111]];
+                var linelatlngs26 = [[37.4663753, 126.9482209], [37.5631, 127.0366]];
+                var linelatlngs27 = [[37.5370084, 127.085092], [37.5370084, 127.085092]];
+                var linelatlngs28 = [[37.51249, 127.06548], [37.51249, 127.06548]];
+
+                
+                
+                
+                
+                var polyline1 = L.polyline(linelatlngs1, {color: 'Magenta', weight:7, opacity:1.0}).addTo(part_1).bindPopup('<a href="http://870114cheol-a.org/about-pjc/" target="_blank"><center><big><b>박종철열사 추모비_박종철 고문치사사건</b></big></a></center>')
+
+                var polyline1 = L.polyline(linelatlngs2, {color: 'Magenta', weight:7, opacity:1.0}).addTo(part_1).bindPopup('<a href="https://snumemory.org" target="_blank"><center><big><b>김세진,이재호 추모비_김세진, 이재호 분신</b></big></a></center>')
+
+
+
+                var polyline = L.polyline(linelatlngs3, {color: 'DeepPink', weight:7, opacity:1.0}).addTo(part_2).bindPopup('<a href="https://www.mpva.go.kr/mpva/selectBbsNttView.do?key=1067&bbsNo=211&nttNo=53204&searchCtgry=&searchCnd=all&searchKrwd=&pageIndex=1&integrDeptCode=" target="_blank"><center><big><b>재일학도의용군전몰용사위령비_인천 상륙 작전</b></big></a></center>')
+
+                var polyline = L.polyline(linelatlngs4, {color: 'DeepPink', weight:7, opacity:1.0}).addTo(part_2).bindPopup('<a href="https://www.mpva.go.kr/mpva/selectBbsNttView.do?key=1067&bbsNo=211&nttNo=53204&searchCtgry=&searchCnd=all&searchKrwd=&pageIndex=1&integrDeptCode=" target="_blank"><center><big><b>재일학도의용군전몰용사위령비_원산 상륙 작전</b></big></a></center>')
+
+                var polyline = L.polyline(linelatlngs5, {color: 'DeepPink', weight:7, opacity:1.0}).addTo(part_2).bindPopup('<a href="https://www.mpva.go.kr/mpva/selectBbsNttView.do?key=1067&bbsNo=211&nttNo=53204&searchCtgry=&searchCnd=all&searchKrwd=&pageIndex=1&integrDeptCode=" target="_blank"><center><big><b>재일학도의용군전몰용사위령비_갑산 혜산진 전투</b></big></a></center>')
+
+                var polyline = L.polyline(linelatlngs6, {color: 'DeepPink', weight:7, opacity:1.0}).addTo(part_2).bindPopup('<a href="https://www.mpva.go.kr/mpva/selectBbsNttView.do?key=1067&bbsNo=211&nttNo=53204&searchCtgry=&searchCnd=all&searchKrwd=&pageIndex=1&integrDeptCode=" target="_blank"><center><big><b>재일학도의용군전몰용사위령비_백마고지 전투</b></big></a></center>')
+
+                var polyline = L.polyline(linelatlngs7, {color: 'DeepPink', weight:7, opacity:1.0}).addTo(part_2).bindPopup('<a href="https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=cc30c752-6497-4b54-b49e-cf9746048135" target="_blank"><center><big><b>호국충혼위령비_개화산지구전투</b></big></a></center>')
+
+
+                
+                var polyline = L.polyline(linelatlngs8, {color: 'FireBrick', weight:7, opacity:1.0}).addTo(part_3).bindPopup('<a href="https://www.joongang.co.kr/article/4277946#home" target="_blank"><center><big><b>대한독립군 무명용사 위령탑_봉오동전투</b></big></a></center>')
+
+                var polyline = L.polyline(linelatlngs9, {color: 'FireBrick', weight:7, opacity:1.0}).addTo(part_3).bindPopup('<a href="http://www.sijung.co.kr/news/articleView.html?idxno=105072" target="_blank"><center><big><b>유관순 열사 추모비_유관순 사망</b></big></a></center>')
+
+                var polyline = L.polyline(linelatlngs10, {color: 'FireBrick', weight:7, opacity:1.0}).addTo(part_3).bindPopup('<a href="https://www.joongang.co.kr/article/4277946#home" target="_blank"><center><big><b>대한독립군 무명용사 위령탑_청산리전투</b></big></a></center>')
+
+
+
+                var polyline = L.polyline(linelatlngs11, {color: 'OrangeRed', weight:7, opacity:1.0}).addTo(part_5).bindPopup('<a href="https://www.mpva.go.kr/english/selectBbsNttView.do?key=992&bbsNo=212&nttNo=55238&searchCtgry=&searchCnd=all&searchKrwd=&pageIndex=1&integrDeptCode=" target="_blank"><center><big><b>최규식 경무관, 정종수 경사 추모비_청와대 습격 사건</b></big></a></center>')
+
+
+                
+                var polyline = L.polyline(linelatlngs12, {color: 'Purple', weight:7, opacity:1.0}).addTo(part_4).bindPopup('<a href="https://www.yna.co.kr/view/AKR20190625135900061" target="_blank"><center><big><b>화성 씨랜드 화재 희생 어린이 추모비_씨랜드 청소년수련원 화재 사고</b></big></a></center>')
+
+                var polyline = L.polyline(linelatlngs13, {color: 'Purple', weight:7, opacity:1.0}).addTo(part_4).bindPopup('<a href="http://segyelocalnews.com/news/newsview.php?ncode=1065625174645929" target="_blank"><center><big><b>우면산 산사태 추모공원_우면산 산사태</b></big></a></center>')
+
+
+
+                var polyline = L.polyline(linelatlngs14, {color: 'Purple', weight:7, opacity:1.0}).addTo(part_4).bindPopup('<a href="https://opengov.seoul.go.kr/mediahub/17629085" target="_blank"><center><big><b>세월호 기억공간-광화문 광장_세월호 침몰</b></big></a></center>')
+
+                var polyline = L.polyline(linelatlngs15, {color: 'Purple', weight:7, opacity:1.0}).addTo(part_4).bindPopup('<a href="https://news.v.daum.net/v/20190426062010743?s=print_news" target="_blank"><center><big><b>와우아파트 붕괴 사고 동판_와우아파트 붕괴</b></big></a></center>')
+
+                var polyline = L.polyline(linelatlngs16, {color: 'Purple', weight:7, opacity:1.0}).addTo(part_4).bindPopup('<a href="http://archive.much.go.kr/data/01/folderView.do?jobdirSeq=246" target="_blank"><center><big><b>성수대교사고희생자위령비_성수대교 붕괴</b></big></a></center>')
+
+                var polyline = L.polyline(linelatlngs17, {color: 'Purple', weight:7, opacity:1.0}).addTo(part_4).bindPopup('<a href="https://www.nfa.go.kr/cherish/news/pressrelease/?boardId=bbs_0000000000000048&mode=view&cntId=26&category=&pageIdx=" target="_blank"><center><big><b>순직 소방관 추모 동판_서울 홍제동 다가구주택 화재 사고</b></big></a></center>')
+
+                var polyline = L.polyline(linelatlngs18, {color: 'Purple', weight:7, opacity:1.0}).addTo(part_4).bindPopup('<a href="http://www.ohmynews.com/NWS_Web/View/img_pg.aspx?CNTN_CD=IE002232135" target="_blank"><center><big><b>삼풍 참사 위령탑_삼풍백화점 붕괴</b></big></a></center>')
+
+
+
+                var polyline = L.polyline(linelatlngs19, {color: 'Purple', weight:7, opacity:1.0}).addTo(part_4).bindPopup('<a href="https://www.sisain.co.kr/news/articleView.html?idxno=42520" target="_blank"><center><big><b>한강 인도교 희생자 위령비_한강 인도교 폭파</b></big></a></center>')
+
+                var polyline = L.polyline(linelatlngs20, {color: 'Purple', weight:7, opacity:1.0}).addTo(part_4).bindPopup('<a href="https://www.hankookilbo.com/News/Read/A2021042718030003719" target="_blank"><center><big><b>용산 참사 추모 현수막 _용산참사</b></big></a></center>')
+
+                var polyline = L.polyline(linelatlngs21, {color: 'Purple', weight:7, opacity:1.0}).addTo(part_4).bindPopup('<a href="https://m.khan.co.kr/national/national-general/article/202009241041001#c2b" target="_blank"><center><big><b>김관홍 잠수사 추모비_세월호 침몰</b></big></a></center>')
+
+                var polyline = L.polyline(linelatlngs22, {color: 'Purple', weight:7, opacity:1.0}).addTo(part_4).bindPopup('<a href="https://www.hani.co.kr/arti/society/society_general/1018139.html" target="_blank"><center><big><b>세월호 기억공간-서울시의회_세월호 침몰</b></big></a></center>')
+
+                var polyline = L.polyline(linelatlngs23, {color: 'Purple', weight:7, opacity:1.0}).addTo(part_4).bindPopup('<a href="https://www.yna.co.kr/view/AKR20170626143900004" target="_blank"><center><big><b>우면산 산사태 기록 간판 시설_우면산 산사태</b></big></a></center>')
+
+
+                var polyline = L.polyline(linelatlngs24, {color: 'DarkViolet', weight:7, opacity:1.0}).addTo(part_6).bindPopup('<a href="http://www.mediapia.co.kr/news/articleView.html?idxno=49506&replyAll=&reply_sc_order_by=C#0BrP" target="_blank"><center><big><b>백남기 열사 추모비 _백남기 사망</b></big></a></center>')
+
+
+
+                var polyline = L.polyline(linelatlngs25, {color: 'DarkGreen', weight:7, opacity:1.0}).addTo(part_7).bindPopup('<a href="https://www.idaegu.co.kr/news/articleView.html?idxno=73725" target="_blank"><center><big><b>고 박태준 포스코 명예회장 추모비_백남기 사망</b></big></a></center>')
+
+
+
+                var polyline = L.polyline(linelatlngs26, {color: 'SteelBlue', weight:7, opacity:1.0}).addTo(part_8).bindPopup('<a href="https://www.sarangbang.or.kr/hrdailynews/56018" target="_blank"><center><big><b>조정식 열사 추모비 _조정식 사망</b></big></a></center>')
+
+                var polyline = L.polyline(linelatlngs27, {color: 'SteelBlue', weight:7, opacity:1.0}).addTo(part_8).bindPopup('<a href="http://www.ohmynews.com/NWS_Web/View/at_pg.aspx?CNTN_CD=A0002745836" target="_blank"><center><big><b>구의역 김군 추모 조형물_구의역 스크린도어 사망 사고 </b></big></a></center>')
+
+                var polyline = L.polyline(linelatlngs28, {color: 'SteelBlue', weight:7, opacity:1.0}).addTo(part_8).bindPopup('<a href="https://www.hani.co.kr/arti/society/society_general/994602.html" target="_blank"><center><big><b>고 서지윤 간호사 추모 조형물_서지윤 간호사 사망</b></big></a></center>')
+
+
+
+
+
+	    </script> 
+    </body>
+</html>
+
